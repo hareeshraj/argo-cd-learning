@@ -86,17 +86,17 @@ jobs:
         with:
           repository: hareeshraj/argo-cd-learning
           token: ${{ secrets.GH_PAT }}
-          path: deploy-repo
+          path: argocd-learning-2
 
       - name: Update image tag in deployment.yaml
         run: |
-          sed -i "s|\(image: .*/argo-cd-learning:\).*|\1${{ steps.version.outputs.tag }}|" deploy-repo/deployment.yaml
+          sed -i "s|\(image: .*/argo-cd-learning:\).*|\1${{ steps.version.outputs.tag }}|" argocd-learning-2/deployment.yaml
 
       - name: Raise PR to deploy repository
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          cd deploy-repo
+          cd argocd-learning-2
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           BRANCH="update-image-${{ steps.version.outputs.tag }}"
